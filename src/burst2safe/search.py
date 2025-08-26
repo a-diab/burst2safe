@@ -92,18 +92,28 @@ def get_burst_group(
         search_results = [result for result in search_results if result.properties['burst']['subswath'] == swath]
         params.append(f'swath {swath}')
     search_results = [result for result in search_results if result.properties['polarization'] == pol]
+    
+    search_result_swaths = set()
+    for result in search_results:
+        search_result_swaths.add(result.properties['burst']['subswath'])
+    
     params.append(f'polarization {pol}')
     param_str = ', '.join(params)
 
     if not search_results:
         raise ValueError(f'No bursts found for {param_str}. Check search parameters on Vertex.')
+    
+    if len(search_results) < min_bursts*len(search_result_swaths):
+        print(f'Got {len(search_results)} bursts for {len(search_result_swaths)} swaths when expecting {min_bursts*len(search_result_swaths)}, adding surrounding bursts...')
+        extended_search_results = []
+        for swath in search_result_swaths:
+            subset_results = [result for result in search_results if result.properties['burst']['subswath'] == swath]
+            extended_search_results.extend(add_surrounding_bursts(subset_results, min_bursts))
+        search_results = extended_search_results
 
-    if len(search_results) < min_bursts:
-        search_results = add_surrounding_bursts(search_results, min_bursts)
-
-    if len(search_results) < min_bursts:
+    if len(search_results) < min_bursts*len(search_result_swaths):
         raise ValueError(f'Less than {min_bursts} bursts found for {param_str}. Check search parameters on Vertex.')
-
+        
     return search_results
 
 
