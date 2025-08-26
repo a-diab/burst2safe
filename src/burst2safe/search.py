@@ -96,7 +96,10 @@ def get_burst_group(
     
     params.append(f'polarization {pol}')
     param_str = ', '.join(params)
-
+    
+    if not search_results:
+        raise ValueError(f'No bursts found for {param_str}. Check search parameters on Vertex.')
+    
     # Group bursts by subswath for easier processing
     swath_groups = defaultdict(list)
     for result in search_results:
