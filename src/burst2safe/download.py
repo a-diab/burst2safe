@@ -46,6 +46,8 @@ async def get_async(session: aiohttp.ClientSession, url: str) -> aiohttp.ClientR
     Returns:
         The response object
     """
+    print("URL REQUEST::")
+    print(url)
     response = await session.get(url)
     response.raise_for_status()
     return response
@@ -60,6 +62,7 @@ async def download_burst_url_async(session: aiohttp.ClientSession, url: str, fil
         url: The URL to download
         file_path: The path to save the downloaded data to
     """
+    print(session, url)
     response = await get_async(session, url)
     assert response.content_disposition is not None
     if file_path.suffix in ['.tif', '.tiff']:
