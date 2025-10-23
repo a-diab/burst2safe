@@ -96,7 +96,9 @@ async def download_bursts_async(url_dict: dict) -> None:
         url_dict: A dictionary of URLs to download
     """
     auth_type = check_earthdata_credentials(append=True)
+    print(auth_type)
     headers = {'Authorization': f'Bearer {os.getenv(TOKEN_ENV_VAR)}'} if auth_type == 'token' else {}
+    print(headers)
     async with aiohttp.ClientSession(headers=headers, trust_env=True) as session:
         # FIXME: once burst extractor API supports EDL tokens this cookie request can be skipped when auth_type='token'
         cookie_response = await session.get(COOKIE_URL)
@@ -116,6 +118,7 @@ def download_bursts(burst_infos: Iterable[BurstInfo]) -> None:
         burst_infos: A list of BurstInfo objects
     """
     url_dict = get_url_dict(burst_infos)
+    print(url_dict)
     asyncio.run(download_bursts_async(url_dict))
     full_dict = get_url_dict(burst_infos, force=True)
     missing_data = [x for x in full_dict.keys() if not x.exists]
