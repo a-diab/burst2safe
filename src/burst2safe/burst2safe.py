@@ -69,6 +69,7 @@ def burst2safe(
     [info.add_start_stop_utc() for info in burst_infos]
 
     if remove_duplicates:
+        print("removing duplicates")
         burst_infos = utils.remove_duplicate_bursts(burst_infos)
 
     safe = Safe(burst_infos, all_anns, work_dir)
