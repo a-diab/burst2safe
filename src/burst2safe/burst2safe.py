@@ -50,6 +50,7 @@ def burst2safe(
         all_anns: Include product annotation files for all swaths, regardless of included bursts
         keep_files: Keep the intermediate files
         work_dir: The directory to create the SAFE in (default: current directory)
+        remove_duplicates: If there is a duplicated burst ID in the download, remove one of the duplicate bursts.
     """
     work_dir = utils.optional_wd(work_dir)
 
