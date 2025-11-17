@@ -145,7 +145,7 @@ def remove_duplicate_bursts(burst_info_list: list[BurstInfo]):
 
 
 
-    return burst_by_len[list(max(burst_by_len.keys()))]
+    return burst_by_len[max(list(burst_by_len.keys()))]
 def sort_burst_infos(burst_info_list: list[BurstInfo]) -> dict:
     """Sort BurstInfo objects by swath and polarization.
 
