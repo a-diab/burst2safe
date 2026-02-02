@@ -244,10 +244,10 @@ def find_bursts(
         min_bursts: The minimum number of bursts per swath (default: 1)
     """
     if granules:
-        print('Using granule search...')
+        asf_logger.info('Using granule search...')
         results = find_granules(granules)
     elif orbit and footprint:
-        print('Using burst group search...')
+        asf_logger.info('Using burst group search...')
         results = find_group(orbit, footprint, polarizations, swaths, mode, min_bursts)
     else:
         raise ValueError(
