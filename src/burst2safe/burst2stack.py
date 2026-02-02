@@ -12,6 +12,7 @@ from burst2safe.safe import Safe
 from burst2safe.search import find_group
 
 import logging
+logger = logging.getLogger(__name__)
 
 
 DESCRIPTION = """Convert a stack of ASF burst SLCs to a stack of ESA SAFEs.
@@ -63,19 +64,19 @@ def burst2stack(
     )
     burst_infos = utils.get_burst_infos(burst_search_results, work_dir)
     abs_orbits = utils.drop_duplicates([burst_info.absolute_orbit for burst_info in burst_infos])
-    logging.info(f'Found {len(burst_infos)} burst(s), comprising {len(abs_orbits)} SAFE(s).')
+    logger.info(f'Found {len(burst_infos)} burst(s), comprising {len(abs_orbits)} SAFE(s).')
 
-    logging.info('Check burst group validities...')
+    logger.info('Check burst group validities...')
     burst_sets = [[bi for bi in burst_infos if bi.absolute_orbit == orbit] for orbit in abs_orbits]
     # Checking burst group validities before download to fail faster
     for burst_set in burst_sets:
         Safe.check_group_validity(burst_set)
 
-    logging.info('Downloading data...')
+    logger.info('Downloading data...')
     download_bursts(burst_infos)
-    logging.info('Download complete.')
+    logger.info('Download complete.')
 
-    logging.info('Creating SAFEs...')
+    logger.info('Creating SAFEs...')
     safe_paths = []
     for burst_set in burst_sets:
         [info.add_shape_info() for info in burst_set]
@@ -85,7 +86,7 @@ def burst2stack(
         safe_paths.append(safe_path)
         if not keep_files:
             safe.cleanup()
-    logging.info('SAFEs created!')
+    logger.info('SAFEs created!')
 
     return safe_paths
 

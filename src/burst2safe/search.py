@@ -8,9 +8,12 @@ import numpy as np
 from asf_search.Products.S1BurstProduct import S1BurstProduct
 from shapely.geometry import Polygon
 
-
+# Disable noise `asf_search` logger
 asf_logger = logging.getLogger(asf_search.__name__)
 asf_logger.disabled = True
+
+# Separate logger for these processes
+logger = logging.getLogger(__name__)
 
 
 def find_granules(granules: Iterable[str]) -> list[S1BurstProduct]:
@@ -244,10 +247,10 @@ def find_bursts(
         min_bursts: The minimum number of bursts per swath (default: 1)
     """
     if granules:
-        asf_logger.info('Using granule search...')
+        logger.info('Using granule search...')
         results = find_granules(granules)
     elif orbit and footprint:
-        asf_logger.info('Using burst group search...')
+        logger.info('Using burst group search...')
         results = find_group(orbit, footprint, polarizations, swaths, mode, min_bursts)
     else:
         raise ValueError(

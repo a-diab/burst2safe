@@ -12,6 +12,7 @@ from burst2safe.safe import Safe
 from burst2safe.search import find_bursts
 
 import logging
+logger = logging.getLogger(__name__)
 
 
 DESCRIPTION = """Convert a set of ASF burst SLCs to the ESA SAFE format.
@@ -56,22 +57,22 @@ def burst2safe(
 
     products = find_bursts(granules, orbit, extent, polarizations, swaths, mode, min_bursts)
     burst_infos = utils.get_burst_infos(products, work_dir)
-    logging.info(f'Found {len(burst_infos)} burst(s).')
+    logger.info(f'Found {len(burst_infos)} burst(s).')
 
-    logging.info('Check burst group validity...')
+    logger.info('Check burst group validity...')
     Safe.check_group_validity(burst_infos)
 
-    logging.info('Downloading data...')
+    logger.info('Downloading data...')
     download_bursts(burst_infos)
-    logging.info('Download complete.')
+    logger.info('Download complete.')
 
-    logging.info('Creating SAFE...')
+    logger.info('Creating SAFE...')
     [info.add_shape_info() for info in burst_infos]
     [info.add_start_stop_utc() for info in burst_infos]
 
     safe = Safe(burst_infos, all_anns, work_dir)
     safe_path = safe.create_safe()
-    logging.info('SAFE created!')
+    logger.info('SAFE created!')
 
     if not keep_files:
         safe.cleanup()
