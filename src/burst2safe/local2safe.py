@@ -11,6 +11,9 @@ from burst2safe import utils
 from burst2safe.burst_id import calculate_burstid
 from burst2safe.safe import Safe
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 def burst_info_from_local(
     tiff_path: Path, xml_path: Path, slc_name: str, swath: str, polarization: str, burst_index: int
@@ -130,15 +133,15 @@ def local2safe(
     work_dir = utils.optional_wd(work_dir)
 
     burst_infos = load_burst_infos(slc_dict)
-    print(f'Found {len(burst_infos)} burst(s).')
+    logger.info(f'Found {len(burst_infos)} burst(s).')
 
-    print('Check burst group validity...')
+    logger.info('Check burst group validity...')
     Safe.check_group_validity(burst_infos)
-    print('Creating SAFE...')
+    logger.info('Creating SAFE...')
 
     safe = Safe(burst_infos, all_anns, work_dir)
     safe_path = safe.create_safe()
-    print('SAFE created!')
+    logger.info('SAFE created!')
 
     if not keep_files:
         safe.cleanup()
