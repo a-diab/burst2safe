@@ -77,19 +77,22 @@ class ListOfListElements:
             previous_line_count = self.slc_lengths[0]
 
         for i, element_list in enumerate(list_of_element_lists[1:]):
-            times = [datetime.fromisoformat(element.find(self.time_field).text) for element in element_list]  # type: ignore[arg-type]
-            keep_index = [index for index, time in enumerate(times) if time > last_time]
-            to_keep = [deepcopy(element_list[index]) for index in keep_index]
+            try:
+                times = [datetime.fromisoformat(element.find(self.time_field).text) for element in element_list]  # type: ignore[arg-type]
+                keep_index = [index for index, time in enumerate(times) if time > last_time]
+                to_keep = [deepcopy(element_list[index]) for index in keep_index]
 
-            if self.has_line:
-                new_lines = [int(elem.find('line').text) + previous_line_count for elem in to_keep]  # type: ignore[arg-type]
-                for elem, line in zip(to_keep, new_lines):
-                    set_text(elem.find('line'), line)  # type: ignore[arg-type]
-                assert self.slc_lengths is not None
-                previous_line_count += self.slc_lengths[i]
+                if self.has_line:
+                    new_lines = [int(elem.find('line').text) + previous_line_count for elem in to_keep]  # type: ignore[arg-type]
+                    for elem, line in zip(to_keep, new_lines):
+                        set_text(elem.find('line'), line)  # type: ignore[arg-type]
+                    assert self.slc_lengths is not None
+                    previous_line_count += self.slc_lengths[i]
 
-            last_time = max([times[index] for index in keep_index])
-            uniques += to_keep
+                last_time = max([times[index] for index in keep_index])
+                uniques += to_keep
+            except ValueError:
+                pass
 
         return uniques
 
