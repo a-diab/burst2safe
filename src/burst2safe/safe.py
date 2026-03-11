@@ -124,10 +124,8 @@ class Safe:
         working_pol = polarizations[0]
         for swath1, swath2 in swath_combos:
             min_diff = burst_range[swath1][working_pol][0] - burst_range[swath2][working_pol][0]
-            if np.abs(min_diff) > 1:
-                raise ValueError(f'Products from swaths {swath1} and {swath2} do not overlap')
             max_diff = burst_range[swath1][working_pol][1] - burst_range[swath2][working_pol][1]
-            if np.abs(max_diff) > 1:
+            if np.abs(max_diff) > 1 and np.abs(min_diff) > 1:
                 raise ValueError(f'Products from swaths {swath1} and {swath2} do not overlap')
 
     def get_name(self, unique_id: str = '0000') -> str:
