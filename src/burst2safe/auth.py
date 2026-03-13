@@ -14,8 +14,12 @@ def get_netrc() -> Path:
     Returns:
         Path to the netrc file
     """
-    netrc_name = '_netrc' if system().lower() == 'windows' else '.netrc'
-    netrc_file = Path.home() / netrc_name
+    netrc_file = os.getenv("NETRC")
+    
+    if netrc_file is None:
+        netrc_name = '_netrc' if system().lower() == 'windows' else '.netrc'
+        netrc_file = Path.home() / netrc_name
+    
     return netrc_file
 
 
