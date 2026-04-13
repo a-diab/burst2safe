@@ -157,7 +157,7 @@ mamba activate burst2safe
 python -m pip install -e .
 ```
 
-## Adding IPF Versions
+## Adding Support for New IPF Versions
 
 When new [IPF versions](https://sar-mpc.eu/processor/ipf/) are added,
 a burst2safe maintainer should update the [IPF integration tests](./tests/test_ipf.py)
