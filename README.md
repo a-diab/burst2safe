@@ -184,6 +184,11 @@ i.e. result in a different SAFE structure compared with the previous version:
    When it finishes, it should print which versions resulted in differences.
    You should go back to the `VERSIONS` list
    and change the `important` attribute for those versions to `True`.
+1. Finally, uncomment the older versions, and then commit the changes to add the new versions.
+
+If there are no new "important" versions, you're done.
+
+TODO: finish documenting script usage
 
 ## License
 `burst2safe` is licensed under the BSD 2-Clause License. See the LICENSE file for more details.
