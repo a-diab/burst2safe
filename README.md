@@ -190,7 +190,7 @@ i.e. result in a different SAFE structure compared with the previous version:
    and change the `important` attribute for those versions to `True`.
 1. Finally, uncomment the older versions and then commit the changes to add the new versions.
 
-If there are no new "important" versions, you're done.
+If there were no new "important" versions, you're done.
 Otherwise, see https://github.com/ASFHyP3/burst2safe/issues/244 for a sketch of the steps for adding new important versions,
 and then update this README section with the complete steps when you're done.
 
