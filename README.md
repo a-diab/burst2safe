@@ -176,8 +176,9 @@ i.e. result in a different SAFE structure compared with the previous version:
 1. Add the new IPF versions to the `VERSIONS` list
    defined globally in the [`identify_ipf_differences`](./tests/etc/identify_ipf_differences.py) script.
    Specify `False` for the `important` attribute for each new `Version` object.
-1. You probably want to comment out all of the older versions, except for the most recent older version
-   (the old version immediately before the new versions). This is because the command that you're about to run
+1. To help the script run faster, you probably want to comment out all of the older versions,
+   except for the most recent older version (the version immediately before the new versions).
+   This is because the command that you're about to run
    works by comparing each version to the previous version to determine if it changes the SAFE structure.
 1. From within the activated mamba environment, run:
    ```
