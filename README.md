@@ -157,6 +157,34 @@ mamba activate burst2safe
 python -m pip install -e .
 ```
 
+## Adding IPF Versions
+
+When new [IPF versions](https://sar-mpc.eu/processor/ipf/) are added,
+a burst2safe maintainer should update the [IPF integration tests](./tests/test_ipf.py)
+to include the new versions.
+
+To update the tests, you will need to use the [`identify_ipf_differences`](./tests/etc/identify_ipf_differences.py) script.
+You may want to read the script to understand how it works.
+
+First, identify which IPF versions are "important",
+i.e. result in a different SAFE structure compared with the previous version:
+
+1. Follow [Developer Setup](#developer-setup).
+1. Add the new IPF versions to the `VERSIONS` list
+   defined globally in the [`identify_ipf_differences`](./tests/etc/identify_ipf_differences.py) script.
+   Specify `False` for the `important` attribute for each new `Version` object.
+1. You probably want to comment out all of the older versions, except for the most recent older version
+   (the old version immediately before the new versions). This is because the command that you're about to run
+   works by comparing each version to the previous version to determine if it changes the SAFE structure.
+1. From within the activated mamba environment, run:
+   ```
+   python tests/etc/identify_ipf_differences.py identify_changing_versions
+   ```
+   This command downloads some large files and takes awhile to run.
+   When it finishes, it should print which versions resulted in differences.
+   You should go back to the `VERSIONS` list
+   and change the `important` attribute for those versions to `True`.
+
 ## License
 `burst2safe` is licensed under the BSD 2-Clause License. See the LICENSE file for more details.
 
