@@ -129,22 +129,24 @@ def get_burst_infos(products: Iterable[S1BurstProduct], work_dir: Path | None) -
 def remove_duplicate_bursts(burst_infos: list[BurstInfo]) -> list[BurstInfo]:
     """
     Check for duplicate burst_ids in a list of BurstInfo objects.
-    
+
     Args:
         burst_info_list: List of BurstInfo objects
     Returns:
         List of BurstInfo objects with duplicates removed
     """
     unique_bursts = []
-    seen_burst_ids = set()
+    seen_bursts = set()
 
-    for burst in burst_infos:  # Ensure 'bursts' matches the variable name returned by the ASF search
+    for burst_info in burst_infos:  # Ensure 'bursts' matches the variable name returned by the ASF search
         # Grab the unique identifier for the physical burst footprint
-        burst_id = burst.burst_id
-        
-        if burst_id not in seen_burst_ids:
-            unique_bursts.append(burst)
-            seen_burst_ids.add(burst_id)
+        burst_id = burst_info.burst_id
+        swath= burst_info.swath
+        burst = (swath, burst_id)
+
+        if burst not in seen_bursts:
+            unique_bursts.append(burst_info)
+            seen_bursts.add(burst)
 
     # Overwrite the original list with the deduplicated list
     burst_infos = unique_bursts
