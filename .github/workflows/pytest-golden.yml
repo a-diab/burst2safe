@@ -15,7 +15,7 @@ jobs:
         with:
           ref: develop
 
-      - uses: mamba-org/setup-micromamba@v2
+      - uses: mamba-org/setup-micromamba@v3
         with:
           environment-file: environment.yml
 
@@ -45,7 +45,7 @@ jobs:
         with:
           ref: main
 
-      - uses: mamba-org/setup-micromamba@v2
+      - uses: mamba-org/setup-micromamba@v3
         with:
           environment-file: environment.yml
 
