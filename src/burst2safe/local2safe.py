@@ -15,6 +15,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def burst_info_from_local(
     tiff_path: Path, xml_path: Path, slc_name: str, swath: str, polarization: str, burst_index: int
 ) -> utils.BurstInfo:
@@ -163,7 +164,23 @@ def main():
     )
     parser.add_argument('--all_anns', action='store_true', help='Include all annotations')
     parser.add_argument('--work_dir', type=Path, help='The directory to store temporary files')
+    parser.add_argument(
+        '-v', '--verbose', action='count', default=0, help='Increase the logging verbosity. Can be used multiple times.'
+    )
     args = parser.parse_args()
+
+    logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO
+    )
+
+    if args.verbose > 0:
+        logger.setLevel(logging.DEBUG)
+    if args.verbose < 2:
+        import asf_search
+
+        asf_logger = logging.getLogger(asf_search.__name__)
+        asf_logger.disabled = True
+
     slc_tree = json.loads(args.json_tree_path.read_text())
 
     local2safe(

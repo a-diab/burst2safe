@@ -12,6 +12,7 @@ from burst2safe.safe import Safe
 from burst2safe.search import find_group
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -115,8 +116,23 @@ def main() -> None:
     )
     parser.add_argument('--keep-files', action='store_true', default=False, help='Keep the intermediate files')
     parser.add_argument('--output-dir', type=str, default=None, help='Output directory to save to')
+    parser.add_argument(
+        '-v', '--verbose', action='count', default=0, help='Increase the logging verbosity. Can be used multiple times.'
+    )
 
     args = utils.reparse_args(parser.parse_args(), tool='burst2stack')
+
+    logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO
+    )
+
+    if args.verbose > 0:
+        logger.setLevel(logging.DEBUG)
+    if args.verbose < 2:
+        import asf_search
+
+        asf_logger = logging.getLogger(asf_search.__name__)
+        asf_logger.disabled = True
 
     burst2stack(
         rel_orbit=args.rel_orbit,
