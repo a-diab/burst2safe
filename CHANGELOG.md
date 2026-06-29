@@ -16,6 +16,10 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Replaced all standard Python `print` calls with `logging` calls.
 
+### Fixed
+
+- Fixed mypy by setting `python_version = ""`.
+
 ## [2.0.2]
 
 ### Fixed

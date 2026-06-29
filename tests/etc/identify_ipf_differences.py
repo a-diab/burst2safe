@@ -65,6 +65,11 @@ VERSIONS = [
     Version('3.80', True),
     Version('3.90', False),
     Version('3.91', False),
+    Version('3.92', False),
+    Version('4.00', False),
+    Version('4.01', False),
+    Version('4.02', False),
+    Version('4.03', False),
 ]
 
 
