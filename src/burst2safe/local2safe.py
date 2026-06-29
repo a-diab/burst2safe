@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import logging
 from datetime import datetime
 from pathlib import Path
 from typing import cast
@@ -11,7 +12,6 @@ from burst2safe import utils
 from burst2safe.burst_id import calculate_burstid
 from burst2safe.safe import Safe
 
-import logging
 
 logger = logging.getLogger(__name__)
 

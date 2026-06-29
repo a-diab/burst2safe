@@ -1,5 +1,6 @@
 """A tool for converting ASF burst SLCs to the SAFE format"""
 
+import logging
 from argparse import ArgumentParser
 from collections.abc import Iterable
 from pathlib import Path
@@ -11,7 +12,6 @@ from burst2safe.download import download_bursts
 from burst2safe.safe import Safe
 from burst2safe.search import find_bursts
 
-import logging
 
 logger = logging.getLogger(__name__)
 

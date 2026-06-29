@@ -16,6 +16,7 @@ IPF Changelog: https://sar-mpc.eu/processor/ipf/
 """
 
 import argparse
+import logging
 import os
 import shutil
 from dataclasses import dataclass
@@ -27,7 +28,6 @@ import lxml.etree as ET
 
 from burst2safe.utils import get_burst_infos
 
-import logging
 
 logger = logging.getLogger(__name__)
 

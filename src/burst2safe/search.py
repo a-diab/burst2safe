@@ -8,6 +8,7 @@ import numpy as np
 from asf_search.Products.S1BurstProduct import S1BurstProduct
 from shapely.geometry import Polygon
 
+
 # Disable noisy `asf_search` logger
 asf_logger = logging.getLogger(asf_search.__name__)
 asf_logger.disabled = True

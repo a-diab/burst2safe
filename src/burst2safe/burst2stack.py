@@ -1,5 +1,6 @@
 """A tool for converting stacks of ASF burst SLCs to stacks of SAFEs"""
 
+import logging
 from argparse import ArgumentParser
 from datetime import datetime
 from pathlib import Path
@@ -11,7 +12,6 @@ from burst2safe.download import download_bursts
 from burst2safe.safe import Safe
 from burst2safe.search import find_group
 
-import logging
 
 logger = logging.getLogger(__name__)
 
