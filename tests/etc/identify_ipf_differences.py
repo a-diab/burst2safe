@@ -151,7 +151,8 @@ def identify_changing_versions(workdir):
     create_diffs(workdir)
     has_changes = get_changes(workdir)
     logging.info('Files with changes:')
-    [logging.info(file) for file in has_changes]
+    for file in has_changes:
+        logging.info(file)
 
 
 def download_representative_support(workdir):
